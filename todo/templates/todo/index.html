@@ -34,7 +34,14 @@
 
     {% for task in tasks %}
     <div class="text">
+
       <h2><a href="{% url 'detail' task_id=task.id %}">{{ task.title }}</a></h2>
+
+      <div>
+        <a href="{% url 'detail' task_id=task.id %}">Detail</a> |
+        <a href="{% url 'delete' task_id=task.id %}">Delete</a>
+      </div>
+
       <ul>
         <li>Posted at: {{ task.posted_at }}</li>
         {% if task.due_at %} 
