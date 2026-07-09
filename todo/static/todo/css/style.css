@@ -1,0 +1,80 @@
+/* Elegant styles for the To Do app (applies without editing templates)
+	 Targets common elements used in the app's templates so no HTML changes required.
+*/
+:root{
+	--bg:#f7fafc; --card:#ffffff; --text:#0f172a; --muted:#6b7280; --accent:#0b79d0;
+	--success:#16a34a; --danger:#ef4444; --radius:10px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+	margin:0;padding:2rem;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Meiryo","Noto Sans JP",sans-serif;
+	background:linear-gradient(180deg,#ffffff 0%,var(--bg) 100%);color:var(--text);
+}
+
+.container{max-width:980px;margin:0 auto}
+
+h1{font-size:1.6rem;margin:0 0 .5rem}
+p{color:var(--muted);margin-top:0}
+
+form{background:var(--card);padding:1rem;border-radius:12px;box-shadow:0 8px 24px rgba(12,20,40,0.04);max-width:720px}
+form div{margin-bottom:.75rem}
+label{display:block;font-weight:700;margin-bottom:.35rem}
+input[type="text"],input[type="datetime-local"]{width:100%;padding:.6rem .7rem;border:1px solid #e6e9ef;border-radius:8px}
+button{background:var(--accent);color:#fff;border:none;padding:.5rem .9rem;border-radius:8px;cursor:pointer}
+
+.text{background:var(--card);padding:1rem;border-radius:10px;margin-bottom:1rem;box-shadow:0 6px 18px rgba(12,20,40,0.04)}
+.text h2{margin:.25rem 0}
+.text a{color:var(--accent);text-decoration:none}
+.text a:hover{text-decoration:underline}
+
+ul{margin:.5rem 0 0 1.25rem}
+li{margin:.25rem 0}
+
+.muted{color:var(--muted)}
+
+/* Links used for sorting or simple nav (e.g. ?order=) */
+a[href*="order"]{color:var(--muted);font-weight:600;margin-right:.5rem}
+
+/* action links inside task blocks (Detail / Delete etc.) */
+.text > div a{margin-right:.6rem;color:var(--muted);text-decoration:none}
+.text > div a:hover{color:var(--accent)}
+
+/* anchor inside headings */
+h2 > a, .text h2 > a{color:var(--text);text-decoration:none}
+h2 > a:hover, .text h2 > a:hover{color:var(--accent)}
+
+/* style for submit buttons inside forms (covers <button> and input[type=submit]) */
+form button, form input[type="submit"]{background:var(--accent);color:#fff;border:none;padding:.5rem .9rem;border-radius:8px;cursor:pointer}
+form button.secondary, form input.secondary{background:#eef2f6;color:var(--text)}
+
+/* Provide subtle emphasis for the status line when present (best-effort) */
+.text ul li:nth-child(3){font-weight:700;color:var(--muted)}
+
+/* make the form and task blocks responsive and centered */
+.text, form{max-width:900px;margin-left:auto;margin-right:auto}
+
+/* small hover polish */
+.text:hover{transform:translateY(-2px);transition:transform .18s ease,box-shadow .18s ease;box-shadow:0 14px 36px rgba(12,20,40,0.06)}
+
+
+/* small-screen adjustments */
+@media (max-width:640px){body{padding:1rem}form{padding:.75rem}}
+
+/* decorative enhancements for links and actions */
+a{transition:color .12s ease}
+
+/* Focus states */
+input:focus{outline:none;box-shadow:0 6px 18px rgba(11,121,208,0.08);border-color:var(--accent)}
+
+/* subtle badges when template contains status words */
+.text li{display:inline-block;margin-right:.5rem}
+.text li:before{content:''}
+
+/* dark mode */
+@media (prefers-color-scheme:dark){
+	:root{--bg:#071025;--card:#0b1220;--text:#e6eef7;--muted:#91a3b5}
+	body{background:linear-gradient(180deg,#071025 0%, #071827 100%)}
+	form,.text{background:var(--card)}
+}
+
