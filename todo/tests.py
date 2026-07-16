@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.utils import timezone
 from datetime import datetime
 from todo.models import Task
+from django.urls import reverse
 
 
 # Create your tests here.
@@ -53,6 +54,24 @@ class TaskModelTestCase(TestCase):
         task.save()
 
         self.assertFalse(task.is_overdue(current))
+
+    def test_is_overdue_now_true_false(self):
+        # due in past -> overdue
+        past = timezone.now() - timezone.timedelta(days=1)
+        t1 = Task(title='past', due_at=past)
+        t1.save()
+        self.assertTrue(t1.is_overdue_now())
+
+        # due in future -> not overdue
+        future = timezone.now() + timezone.timedelta(days=1)
+        t2 = Task(title='future', due_at=future)
+        t2.save()
+        self.assertFalse(t2.is_overdue_now())
+
+    def test_priority_default_and_choices(self):
+        t = Task(title='prio')
+        t.save()
+        self.assertEqual(t.priority, 'normal')
 
 
 class TodoViewTestCase(TestCase):
@@ -178,3 +197,35 @@ class TodoViewTestCase(TestCase):
         response = client.get('/1/delete/')
 
         self.assertEqual(response.status_code, 404)
+
+    def test_create_with_priority_and_template_output(self):
+        client = Client()
+        data = {'title': 'Priority Task', 'due_at': '2026-06-24 23:59:59', 'priority': 'high'}
+        response = client.post('/', data)
+
+        # after POST the index view renders the list (200)
+        self.assertEqual(response.status_code, 200)
+        tasks = Task.objects.all()
+        self.assertEqual(tasks.count(), 1)
+        t = tasks.first()
+        self.assertEqual(t.priority, 'high')
+
+        # template should contain the priority class
+        response2 = client.get('/')
+        self.assertContains(response2, 'priority-high')
+
+    def test_template_shows_overdue_and_completed_classes(self):
+        # create overdue task
+        past = timezone.now() - timezone.timedelta(days=2)
+        overdue = Task(title='overdue', due_at=past)
+        overdue.save()
+
+        # create completed task
+        done = Task(title='done')
+        done.completed = True
+        done.save()
+
+        client = Client()
+        resp = client.get('/')
+        self.assertContains(resp, 'task-overdue')
+        self.assertContains(resp, 'task-completed')
