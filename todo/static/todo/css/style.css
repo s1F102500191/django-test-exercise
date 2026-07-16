@@ -79,18 +79,8 @@ input:focus{outline:none;box-shadow:0 6px 18px rgba(11,121,208,0.08);border-colo
 }
 .edit-container{width:min(100%,640px)}
 .edit-header{margin-bottom:1.5rem}
-.edit-header h1{font-size:clamp(2rem,6vw,2.75rem);letter-spacing:-.04em;margin:.25rem 0 .5rem}
+.edit-header h1{font-size:2.25rem;letter-spacing:-.04em;margin:.25rem 0 .5rem}
 .edit-header > p:last-child{font-size:1rem;line-height:1.65;margin-bottom:0}
-.edit-eyebrow{
-	color:var(--accent);
-	font-size:.75rem;
-	font-weight:800;
-	letter-spacing:.14em;
-	margin:.9rem 0 0;
-	text-transform:uppercase;
-}
-.back-link{color:var(--muted);font-size:.9rem;font-weight:700;text-decoration:none}
-.back-link:hover{color:var(--accent)}
 .edit-form{
 	max-width:none;
 	padding:2rem;
@@ -113,20 +103,6 @@ input:focus{outline:none;box-shadow:0 6px 18px rgba(11,121,208,0.08);border-colo
 	outline-offset:2px;
 	box-shadow:none;
 }
-.field-hint{font-size:.8rem;line-height:1.5;margin:.5rem 0 0}
-.edit-actions{display:flex;align-items:center;gap:1rem;margin:2rem 0 0}
-.edit-actions button{
-	min-height:2.75rem;
-	padding:.7rem 1.25rem;
-	font:inherit;
-	font-weight:700;
-	box-shadow:0 8px 20px rgba(11,121,208,.2);
-	transition:background-color .15s ease,transform .15s ease,box-shadow .15s ease;
-}
-.edit-actions button:hover{background:#0868b4;transform:translateY(-1px);box-shadow:0 10px 24px rgba(11,121,208,.28)}
-.edit-actions button:focus-visible,.cancel-link:focus-visible,.back-link:focus-visible{outline:3px solid rgba(11,121,208,.2);outline-offset:3px}
-.cancel-link{color:var(--muted);font-weight:700;text-decoration:none}
-.cancel-link:hover{color:var(--text)}
 
 /* subtle badges when template contains status words */
 .text li{display:inline-block;margin-right:.5rem}
@@ -137,15 +113,4 @@ input:focus{outline:none;box-shadow:0 6px 18px rgba(11,121,208,0.08);border-colo
 	:root{--bg:#071025;--card:#0b1220;--text:#e6eef7;--muted:#91a3b5}
 	body{background:linear-gradient(180deg,#071025 0%, #071827 100%)}
 	form,.text{background:var(--card)}
-	.edit-page{background:radial-gradient(circle at top left,rgba(11,121,208,.18),transparent 34rem),linear-gradient(180deg,#071025 0%,#071827 100%)}
-	.edit-form{border-color:rgba(148,163,184,.18)}
-	.edit-form input[type="text"],.edit-form input[type="datetime-local"]{background:#111c2e;border-color:#334155;color:var(--text);color-scheme:dark}
-}
-
-@media (max-width:640px){
-	.edit-page{display:block;padding:2rem 1rem}
-	.edit-form{padding:1.25rem}
-	.edit-actions{align-items:stretch;flex-direction:column}
-	.edit-actions button,.cancel-link{text-align:center;width:100%}
-	.cancel-link{padding:.65rem}
 }

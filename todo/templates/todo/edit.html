@@ -11,26 +11,22 @@
 <body class="edit-page">
 <main class="edit-container">
   <header class="edit-header">
-    <a class="back-link" href="{% url 'detail' task_id=task.id %}" aria-label="Back to task detail">&larr; Back to task</a>
-    <p class="edit-eyebrow">Task editor</p>
     <h1>Edit task</h1>
-    <p>Update the title or due date, then save your changes.</p>
+    <p>You can edit tasks from the following form.</p>
   </header>
 
   <form class="edit-form" action="{% url 'update' task.id %}" method="post">
     {% csrf_token %}
     <div class="form-field">
       <label for="titleInput">Title</label>
-      <input id="titleInput" name="title" type="text" placeholder="Input title" value="{{ task.title }}" required autofocus>
+      <input id="titleInput" name="title" type="text" placeholder="Input title" value="{{ task.title }}">
     </div>
     <div class="form-field">
-      <label for="dueInput">Due at</label>
-      <input id="dueInput" name="due_at" type="datetime-local" value="{{ task.due_at|date:'Y-m-d\\TH:i' }}">
-      <p class="field-hint">Leave this blank if the task has no deadline.</p>
+      <label for="dueInput">Due at:</label>
+      <input id="dueInput" name="due_at" type="datetime-local" value="{{ task.due_at |date:"Y-m-d H:i" }}">
     </div>
-    <div class="edit-actions">
-      <button type="submit">Save changes</button>
-      <a class="cancel-link" href="{% url 'detail' task_id=task.id %}">Cancel</a>
+    <div>
+      <button type="submit">Submit</button>
     </div>
   </form>
 </main>
