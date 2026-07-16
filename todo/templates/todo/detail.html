@@ -9,25 +9,40 @@
     <link rel="stylesheet" href="{% static 'todo/css/style.css' %}">
   </head>
 
-  <body>
-    <h1>{{ task.title }}</h1>
-    <ul>
-      <li>Posted at: {{ task.posted_at }}</li>
-      {% if task.due_at %}
-      <li>Due at: {{ task.due_at }}</li>
-      {% endif %}
-      {% if task.completed %}
-      <li>Status: Completed</li>
-      {% else %}
-      <li>Status: Not Completed</li>
-      {% endif %}
-    </ul>
+  <body class="detail-page">
+    <main class="detail-container">
+      <a class="detail-back" href="{% url 'index' %}">&larr; Back to tasks</a>
 
-    <div>
-      <a href="{% url 'index' %}">Top</a>
-      <a href="{% url 'update' task.id %}">Edit</a>
-      <a href="{% url 'close' task.id %}">Close</a>
-    </div>
+      <article class="detail-card">
+        <header class="detail-header">
+          <p class="detail-label">Task details</p>
+          <h1>{{ task.title }}</h1>
+          {% if task.completed %}
+          <span class="status-badge status-completed">Completed</span>
+          {% else %}
+          <span class="status-badge status-open">Not completed</span>
+          {% endif %}
+        </header>
+
+        <dl class="detail-meta">
+          <div>
+            <dt>Posted at</dt>
+            <dd>{{ task.posted_at }}</dd>
+          </div>
+      {% if task.due_at %}
+          <div>
+            <dt>Due at</dt>
+            <dd>{{ task.due_at }}</dd>
+          </div>
+      {% endif %}
+        </dl>
+
+        <footer class="detail-actions">
+          <a class="action-button action-secondary" href="{% url 'update' task.id %}">Edit</a>
+          <a class="action-button action-primary" href="{% url 'close' task.id %}">Close task</a>
+        </footer>
+      </article>
+    </main>
   </body>
 
 </html>
