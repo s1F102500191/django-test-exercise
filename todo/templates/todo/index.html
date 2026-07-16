@@ -19,6 +19,14 @@
         <input id="titleInput" name="title" type="text" placeholder="Input title" required>
       </div>
       <div>
+        <label for="priorityInput">Priority</label><br>
+        <select id="priorityInput" name="priority">
+          <option value="low">Low</option>
+          <option value="normal" selected>Normal</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+      <div>
         <label for="dueInput">Due at:</label><br>
         <input id="dueInput" name="due_at" type="datetime-local">
       </div>
@@ -35,7 +43,7 @@
     </div>
 
     {% for task in tasks %}
-    <div class="text">
+    <div class="text {% if task.completed %}task-completed{% elif task.is_overdue_now %}task-overdue{% endif %} priority-{{ task.priority }}">
 
       <h2><a href="{% url 'detail' task_id=task.id %}">{{ task.title }}</a></h2>
 
@@ -56,9 +64,9 @@
         <li>Due at: {{ task.due_at }}</li>
         {% endif %}
         {% if task.completed %} 
-        <li>Status: Completed</li>
+        <li class="status">Status: Completed</li>
         {% else %}
-        <li>Status: Not Completed</li>
+        <li class="status">Status: Not Completed</li>
         {% endif %}
       </ul>
     </div>

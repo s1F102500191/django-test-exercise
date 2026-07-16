@@ -22,6 +22,14 @@
       <input id="titleInput" name="title" type="text" placeholder="Input title" value="{{ task.title }}">
     </div>
     <div class="form-field">
+      <label for="priorityInput">Priority</label>
+      <select id="priorityInput" name="priority" style="width: 100%; padding: .6rem .7rem; border: 1px solid #cbd5e1; border-radius: 8px;">
+        <option value="low" {% if task.priority == 'low' %}selected{% endif %}>Low</option>
+        <option value="normal" {% if task.priority == 'normal' %}selected{% endif %}>Normal</option>
+        <option value="high" {% if task.priority == 'high' %}selected{% endif %}>High</option>
+      </select>
+    </div>
+    <div class="form-field">
       <label for="dueInput">Due at:</label>
       <input id="dueInput" name="due_at" type="datetime-local" value="{{ task.due_at |date:"Y-m-d H:i" }}">
     </div>

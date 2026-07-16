@@ -135,16 +135,23 @@ def parse_due_at(value):
 
 def index(request):
     if request.method == 'POST':
+        priority = request.POST.get('priority', 'normal')
+
+        # random アクションが指定されていればランダムなタイトルを採用
         if request.POST.get('action') == 'random':
             title = random.choice(RANDOM_TASK_TITLES)
             due_at = None
         else:
             title = request.POST.get('title', '').strip()
+            # もし入力タイトルが空ならデフォルトを割り当て
+            if not title:
+                title = "ランダムなタスク"
             due_at = parse_due_at(request.POST.get('due_at'))
 
         Task.objects.create(
             title=title,
-            due_at=due_at
+            due_at=due_at,
+            priority=priority  # 優先度の追加
         )
 
         return redirect('index')
@@ -158,7 +165,6 @@ def index(request):
         'tasks': tasks
     }
     return render(request, 'todo/index.html', context)
-
 
 def detail(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
@@ -175,6 +181,7 @@ def update(request, task_id):
     if request.method == 'POST':
         task.title = request.POST.get('title', '').strip()
         task.due_at = parse_due_at(request.POST.get('due_at'))
+        task.priority = request.POST.get('priority', 'normal')  # 優先度を更新
         task.save()
 
         return redirect('detail', task_id=task.id)
