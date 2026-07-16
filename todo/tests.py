@@ -3,6 +3,7 @@ from django.utils import timezone
 from datetime import datetime
 from todo.models import Task
 from django.urls import reverse
+from todo import views as todo_views
 
 
 # Create your tests here.
@@ -91,6 +92,16 @@ class TodoViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.templates[0].name, 'todo/index.html')
         self.assertEqual(len(response.context['tasks']), 1)
+
+    def test_index_post_random_task(self):
+        client = Client()
+        data = {'action': 'random'}
+        response = client.post('/', data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.templates[0].name, 'todo/index.html')
+        self.assertEqual(len(response.context['tasks']), 1)
+        self.assertIn(response.context['tasks'][0].title, todo_views.RANDOM_TASK_TITLES)
 
     def test_index_get_order_post(self):
         task1 = Task(title='task1', due_at=timezone.make_aware(datetime(2026, 7, 1)))
