@@ -8,10 +8,24 @@ from todo.models import Task
 # Create your views here.
 def index(request):
     if request.method == 'POST':
+        # 1. タイトルの安全な取得（なければ 'ランダムなタスク' にする）
+        title = request.POST.get('title')
+        if not title:
+            title = "ランダムなタスク"
+
+        # 2. 期限の安全な取得（なければ 現在時刻 にする）
+        due_at_raw = request.POST.get('due_at')
+        if due_at_raw:
+            due_at = make_aware(parse_datetime(due_at_raw))
+        else:
+            from django.utils.timezone import now
+            due_at = now()
+
+        # 3. 優先度の取得
         priority = request.POST.get('priority', 'normal')
-        task = Task(title=request.POST['title'],
-                    due_at=make_aware(parse_datetime(request.POST['due_at'])),
-                    priority=priority)
+
+        # 安全に取り出したデータを使ってタスクを保存
+        task = Task(title=title, due_at=due_at, priority=priority)
         task.save()
 
     if request.GET.get('order') == 'due':
@@ -23,7 +37,6 @@ def index(request):
         'tasks': tasks
     }
     return render(request, 'todo/index.html', context)
-
 
 def detail(request, task_id):
     try:
