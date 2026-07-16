@@ -11,7 +11,7 @@
 
   <body class="detail-page">
     <main class="detail-container">
-      <a class="detail-back" href="{% url 'index' %}">&larr; Back to tasks</a>
+      <a class="detail-back" href="{% url 'index' %}">Top</a>
 
       <article class="detail-card">
         <header class="detail-header">
@@ -39,7 +39,7 @@
 
         <footer class="detail-actions">
           <a class="action-button action-secondary" href="{% url 'update' task.id %}">Edit</a>
-          <a class="action-button action-primary" href="{% url 'close' task.id %}">Close task</a>
+          <a class="action-button action-primary" href="{% url 'close' task.id %}">Close</a>
         </footer>
       </article>
     </main>

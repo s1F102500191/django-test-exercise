@@ -168,14 +168,6 @@ input:focus{outline:none;box-shadow:0 6px 18px rgba(11,121,208,0.08);border-colo
 .text li:before{content:''}
 
 /* dark mode */
-@media (max-width:640px){
-	.detail-page{padding:1.5rem 1rem}
-	.detail-header,.detail-meta,.detail-actions{padding-left:1.25rem;padding-right:1.25rem}
-	.detail-header h1{font-size:1.75rem}
-	.detail-meta > div{grid-template-columns:1fr;gap:.35rem}
-	.detail-actions{align-items:stretch;flex-direction:column-reverse;text-align:center}
-}
-
 @media (prefers-color-scheme:dark){
 	:root{--bg:#071025;--card:#0b1220;--text:#e6eef7;--muted:#91a3b5}
 	body{background:linear-gradient(180deg,#071025 0%, #071827 100%)}
