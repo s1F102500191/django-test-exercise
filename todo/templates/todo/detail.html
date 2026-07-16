@@ -13,7 +13,7 @@
     <main class="detail-container">
       <a class="detail-back" href="{% url 'index' %}">Top</a>
 
-      <article class="detail-card">
+      <article class="detail-card {% if task.completed %}task-completed{% elif task.is_overdue_now %}task-overdue{% endif %} priority-{{ task.priority }}">
         <header class="detail-header">
           <p class="detail-label">Task details</p>
           <h1>{{ task.title }}</h1>
@@ -39,7 +39,10 @@
 
         <footer class="detail-actions">
           <a class="action-button action-secondary" href="{% url 'update' task.id %}">Edit</a>
-          <a class="action-button action-primary" href="{% url 'close' task.id %}">Close</a>
+          <form class="detail-close-form" action="{% url 'close' task.id %}" method="post">
+            {% csrf_token %}
+            <button class="action-button action-primary" type="submit">Close</button>
+          </form>
         </footer>
       </article>
     </main>

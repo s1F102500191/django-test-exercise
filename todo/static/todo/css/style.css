@@ -157,6 +157,7 @@ input:focus{outline:none;box-shadow:0 6px 18px rgba(11,121,208,0.08);border-colo
 .detail-meta dt{color:var(--muted);font-size:.85rem;font-weight:700}
 .detail-meta dd{margin:0;font-weight:600;overflow-wrap:anywhere}
 .detail-actions{display:flex;justify-content:flex-end;gap:.75rem;padding:1.5rem 2rem;background:rgba(148,163,184,.06)}
+.detail-close-form{margin:0;padding:0;background:none;box-shadow:none}
 .action-button{display:inline-block;padding:.65rem 1rem;border-radius:8px;font-weight:700;text-decoration:none}
 .action-secondary{border:1px solid #cbd5e1;color:var(--text)}
 .action-secondary:hover{border-color:var(--accent);color:var(--accent)}
@@ -175,3 +176,23 @@ input:focus{outline:none;box-shadow:0 6px 18px rgba(11,121,208,0.08);border-colo
 	.detail-page{background:radial-gradient(circle at top right,rgba(11,121,208,.15),transparent 32rem),linear-gradient(180deg,#071025 0%,#071827 100%)}
 	.action-secondary{border-color:#334155}
 }
+
+/* Task color indicators */
+.text.task-completed,.detail-card.task-completed{border-left:6px solid var(--success);}
+.text.task-overdue,.detail-card.task-overdue{border-left:6px solid var(--danger);}
+.text .status{font-weight:700}
+
+/* Optional subtle background tint */
+.text.task-completed,.detail-card.task-completed{background:linear-gradient(90deg, rgba(22,163,74,0.03), transparent)}
+.text.task-overdue,.detail-card.task-overdue{background:linear-gradient(90deg, rgba(239,68,68,0.03), transparent)}
+
+/* Priority indicators */
+.text.priority-high,.detail-card.priority-high{box-shadow:0 6px 18px rgba(249,115,22,0.04);border-left:6px solid #f97316}
+.text.priority-normal,.detail-card.priority-normal{box-shadow:0 6px 18px rgba(11,121,208,0.04);border-left:6px solid var(--accent)}
+.text.priority-low,.detail-card.priority-low{box-shadow:0 6px 18px rgba(107,114,128,0.04);border-left:6px solid #9ca3af}
+
+/* Priority badge */
+.text h2:after{content:'';display:inline-block;margin-left:.6rem;padding:.15rem .5rem;border-radius:6px;font-size:.75rem}
+.text.priority-high h2:after{content:'High';background:#fff4e6;color:#b45309}
+.text.priority-normal h2:after{content:'Normal';background:#eef6ff;color:#0b79d0}
+.text.priority-low h2:after{content:'Low';background:#f3f4f6;color:#374151}
