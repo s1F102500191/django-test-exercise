@@ -16,7 +16,7 @@
       {% csrf_token %}
       <div>
         <label for="titleInput">Title</label><br>
-        <input id="titleInput" name="title" type="text" placeholder="Input title">
+        <input id="titleInput" name="title" type="text" placeholder="Input title" required>
       </div>
       <div>
         <label for="dueInput">Due at:</label><br>
@@ -41,7 +41,13 @@
 
       <div>
         <a href="{% url 'detail' task_id=task.id %}">Detail</a> |
-        <a href="{% url 'delete' task_id=task.id %}">Delete</a>
+
+        <form action="{% url 'delete' task_id=task.id %}"
+              method="post"
+              style="display: inline;">
+          {% csrf_token %}
+          <button type="submit">Delete</button>
+        </form>
       </div>
 
       <ul>
