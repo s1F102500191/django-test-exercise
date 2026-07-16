@@ -1,7 +1,7 @@
 from datetime import datetime
 from unittest.mock import patch
 
-from django.test import TestCase
+from django.test import TestCase,Client
 from django.urls import reverse
 from django.utils import timezone
 
@@ -459,19 +459,28 @@ class TodoViewTestCase(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_create_with_priority_and_template_output(self):
-        client = Client()
-        data = {'title': 'Priority Task', 'due_at': '2026-06-24 23:59:59', 'priority': 'high'}
-        response = client.post('/', data)
+        data = {
+            'title': 'Priority Task',
+            'due_at': '2026-06-24 23:59:59',
+            'priority': 'high'
+        }
 
-        # after POST the index view renders the list (200)
-        self.assertEqual(response.status_code, 200)
+        response = self.client.post(
+            reverse('index'),
+            data
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('index'))
+
         tasks = Task.objects.all()
         self.assertEqual(tasks.count(), 1)
         t = tasks.first()
         self.assertEqual(t.priority, 'high')
 
-        # template should contain the priority class
-        response2 = client.get('/')
+        response2 = self.client.get(
+            reverse('index')
+        )
         self.assertContains(response2, 'priority-high')
 
     def test_template_shows_overdue_and_completed_classes(self):
