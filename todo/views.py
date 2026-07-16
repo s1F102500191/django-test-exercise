@@ -8,23 +8,24 @@ from todo.models import Task
 # Create your views here.
 def index(request):
     if request.method == 'POST':
-        # 1. タイトルの安全な取得（なければ 'ランダムなタスク' にする）
         title = request.POST.get('title')
         if not title:
             title = "ランダムなタスク"
 
-        # 2. 期限の安全な取得（なければ 現在時刻 にする）
+        # 安全な due_at の処理: parse_datetime が None を返す可能性に対応
+        due_at = None
         due_at_raw = request.POST.get('due_at')
         if due_at_raw:
-            due_at = make_aware(parse_datetime(due_at_raw))
-        else:
-            from django.utils.timezone import now
-            due_at = now()
+            parsed = parse_datetime(due_at_raw)
+            if parsed:
+                # parsed がタイムゾーン情報を持たなければ補う
+                if parsed.tzinfo is None:
+                    due_at = make_aware(parsed)
+                else:
+                    due_at = parsed
 
-        # 3. 優先度の取得
         priority = request.POST.get('priority', 'normal')
 
-        # 安全に取り出したデータを使ってタスクを保存
         task = Task(title=title, due_at=due_at, priority=priority)
         task.save()
 
@@ -66,7 +67,17 @@ def update(request, task_id):
 
     if request.method == 'POST':
         task.title = request.POST['title']
-        task.due_at = make_aware(parse_datetime(request.POST['due_at']))
+        # 安全に due_at を更新（無効な日付文字列は None とする）
+        due_at = None
+        due_at_raw = request.POST.get('due_at')
+        if due_at_raw:
+            parsed = parse_datetime(due_at_raw)
+            if parsed:
+                if parsed.tzinfo is None:
+                    due_at = make_aware(parsed)
+                else:
+                    due_at = parsed
+        task.due_at = due_at
         task.priority = request.POST.get('priority', 'normal')
         task.save()
         return redirect(detail, task_id)
